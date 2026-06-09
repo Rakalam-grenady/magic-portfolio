@@ -24,10 +24,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Verify out directory
+      - name: Verify build output
         run: |
-          if [ ! -d "out" ]; then
-            echo "Error: out/ directory not found!"
+          if [ ! -d ".next" ]; then
+            echo "Error: .next/ directory not found!"
             exit 1
           fi
 
@@ -37,5 +37,13 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: out/
+          local-dir: .
           server-dir: /public_html/rakalam.adraho.com/
+          exclude: |
+            .git
+            .github
+            .vscode
+            node_modules
+            .next/cache
+            .DS_Store
+            README.md
