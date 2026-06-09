@@ -31,19 +31,28 @@ jobs:
             exit 1
           fi
 
+      - name: Prepare deploy folder
+        run: |
+          rm -rf deploy
+          mkdir deploy
+          cp -R .next deploy/. 
+          cp -R public deploy/. 
+          cp package.json package-lock.json next.config.mjs deploy/.
+
+      - name: Verify deploy folder
+        run: |
+          if [ ! -d "deploy/.next" ]; then
+            echo "Error: deploy/.next/ directory not found!"
+            exit 1
+          fi
+
       - name: Deploy via FTP to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          local-dir: deploy/
           server-dir: /public_html/rakalam.adraho.com/
           exclude: |
-            .git
-            .github
-            .vscode
-            node_modules
-            .next/cache
             .DS_Store
-            README.md
