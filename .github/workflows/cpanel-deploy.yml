@@ -24,9 +24,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Export static site
-        run: npm run export
-
       - name: Verify out directory
         run: |
           if [ ! -d "out" ]; then
