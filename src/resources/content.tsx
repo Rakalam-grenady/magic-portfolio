@@ -22,19 +22,19 @@ const social: Social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/Grenady-rakalam",
+    link: "https://github.com/Rakalam-grenady",
     essential: true,
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/mamy-patrick-rakalam",
+    link: "https://www.linkedin.com/in/patrick-mamy-35079734a",
     essential: true,
   },
   {
     name: "WhatsApp",
     icon: "whatsapp",
-    link: "https://wa.me/261340000000",
+    link: "https://wa.me/261340890462",
     essential: true,
   },
   {
@@ -47,9 +47,9 @@ const social: Social = [
 
 /** Liens affichés sur la page contact */
 const footerContact = {
-  whatsapp: "https://wa.me/261340000000",
-  linkedin: "https://www.linkedin.com/in/mamy-patrick-rakalam",
-  github: "https://github.com/Grenady-rakalam",
+  whatsapp: "https://wa.me/261340890462",
+  linkedin: "https://www.linkedin.com/in/patrick-mamy-35079734a",
+  github: "https://github.com/Rakalam-grenady",
   email: person.email,
 } as const;
 
@@ -59,7 +59,7 @@ const home: Home = {
   label: "Accueil",
   title: `Portfolio – ${person.name}`,
   description: `Portfolio de ${person.name}, ${person.role} à Madagascar`,
-  headline: <>Concevoir des interfaces modernes, rapides et utiles</>,
+  headline: <>Concevoir des solutions modernes, rapides et utiles</>,
   featured: {
     display: true,
     title: (
