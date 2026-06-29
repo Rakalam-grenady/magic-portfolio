@@ -1,0 +1,84 @@
+---
+title: "EmDash — l’alternative TypeScript à WordPress"
+summary: "Retour d’expérience sur EmDash, un CMS moderne basé sur Astro et TypeScript, pensé pour remplacer WordPress dans un contexte full stack."
+publishedAt: "2026-06-17"
+tag: "CMS & TypeScript"
+image: "/images/projects/project-01/emdash.png"
+---
+
+## Contexte
+
+WordPress reste incontournable, mais son socle en PHP et son architecture monolithique montrent des limites : sécurité, maintenabilité et adaptation aux environnements modernes.  
+C’est là qu’intervient **EmDash**, un CMS open source écrit en **TypeScript**, basé sur **Astro**, et conçu pour être plus robuste et évolutif.
+
+## Installation
+
+L’installation est pensée pour les environnements modernes.  
+Un simple `Téléchargez le programme d'installation`, puis initialise un projet avec une structure claire et des plugins isolés.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-3"
+    codes={[
+  {
+    code:
+`https://emdash.sh/docs/installation`,
+    language: "bash",
+    label: "Lien officiel d'installation"
+  }
+]} />
+
+## Architecture
+
+Contrairement à WordPress, EmDash repose sur une architecture **serverless** et des plugins isolés.  
+Chaque extension est exécutée dans une sandbox, ce qui limite les failles de sécurité classiques.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="2-5"
+    codes={[
+  {
+    code:
+`const plugin = {
+  name: "comments",
+  sandbox: true,
+  entry: "./plugins/comments.ts"
+};`,
+    language: "ts",
+    label: "Déclaration d’un plugin EmDash"
+  }
+]} />
+
+## Comparaison avec WordPress
+
+<CodeBlock
+    marginBottom="16"
+    highlight="2-5"
+    codes={[
+  {
+    code:
+`// Comparaison rapide CMS
+
+const comparison = [
+  { critere: "Langage", wordpress: "PHP", emdash: "TypeScript" },
+  { critere: "Architecture", wordpress: "Monolithique", emdash: "Serverless + Astro" },
+  { critere: "Plugins", wordpress: "Non isolés", emdash: "Sandbox sécurisée" },
+  { critere: "Licence", wordpress: "GPL", emdash: "MIT" },
+  { critere: "Performance", wordpress: "Dépend serveur", emdash: "Optimisé CDN/Cloud" },
+];`,
+    language: "ts",
+    label: "WordPress vs EmDash"
+  }
+]} />
+
+## Mon point de vue
+
+- ✅ **Modernité** : TypeScript et Astro rendent le développement plus fluide pour les devs habitués à Next.js.  
+- 🔒 **Sécurité** : isolation des plugins = gros avantage par rapport aux failles WordPress.  
+- ⚡ **Performance** : pensé pour le cloud et le serverless, donc plus adapté aux workflows CI/CD.  
+- 📉 **Écosystème** : encore jeune, mais prometteur.  
+
+## Conclusion
+
+EmDash n’a pas encore l’écosystème gigantesque de WordPress, mais il incarne une **vision moderne du CMS** : sécurité, performance et TypeScript-first.  
+Pour un développeur habitué aux stacks modernes, c’est une alternative excitante qui mérite d’être explorée.

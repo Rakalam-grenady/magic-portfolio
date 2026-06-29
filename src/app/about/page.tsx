@@ -96,7 +96,7 @@ export default function About() {
             <Avatar src={person.avatar} size="xl" />
             <Row gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
+             Madagascar F/tsoa
             </Row>
             {person.languages && person.languages.length > 0 && (
               <Row wrap gap="8">
@@ -213,9 +213,9 @@ export default function About() {
               >
                 {about.work.title}
               </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+              <Column fillWidth gap="l" marginBottom="40" >
                 {about.work.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
+                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth className="showblack">
                     <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
                         {experience.company}

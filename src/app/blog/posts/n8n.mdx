@@ -1,0 +1,84 @@
+---
+title: "Automatiser des workflows IA avec n8n"
+summary: "Mise en place de pipelines intelligents pour RAG et classification des emails grâce à n8n."
+publishedAt: "2026-05-20"
+tag: "Automation & IA"
+image: "/images/projects/project-01/n8n.png"
+---
+
+## Introduction
+
+Dans mes projets récents, j’ai intégré **n8n** pour orchestrer des workflows complexes.  
+Objectif : automatiser des tâches critiques comme la **classification des emails** et la mise en place d’un pipeline **RAG (Retrieval-Augmented Generation)** pour enrichir les réponses générées par IA.
+
+## Workflow RAG
+
+Le workflow RAG combine récupération de documents, enrichissement contextuel et génération de réponses.  
+Avec n8n, j’ai pu orchestrer chaque étape visuellement et connecter plusieurs services.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="2-6"
+    codes={[
+  {
+    code:
+`{
+  "nodes": [
+    { "name": "Webhook In", "type": "webhook" },
+    { "name": "Vector DB Query", "type": "postgres" },
+    { "name": "LLM Response", "type": "ollama" },
+    { "name": "Webhook Out", "type": "webhook" }
+  ]
+}`,
+    language: "json",
+    label: "n8n workflow RAG"
+  }
+]} />
+
+Ce pipeline permet de recevoir une requête, interroger une base vectorielle, générer une réponse enrichie via un modèle IA, puis renvoyer le résultat.
+
+## Classification des emails
+
+Un autre cas d’usage a été la **classification automatique des emails entrants**.  
+Grâce à n8n, j’ai pu définir des règles et intégrer un modèle IA pour catégoriser les messages.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-3"
+    codes={[
+  {
+    code:
+`{
+  "nodes": [
+    { "name": "IMAP Email Trigger", "type": "imap" },
+    { "name": "AI Classifier", "type": "ollama" },
+    { "name": "Router", "type": "switch" },
+    { "name": "CRM Update", "type": "httpRequest" }
+  ]
+}`,
+    language: "json",
+    label: "n8n workflow Email Classification"
+  }
+]} />
+
+Chaque email est analysé, classé (support, commercial, personnel, etc.), puis redirigé vers le bon canal ou outil métier.
+
+## Stack technique
+
+- **n8n** pour l’orchestration visuelle des workflows  
+- **Ollama** pour l’inférence locale des modèles IA  
+- **FastAPI** pour les services métier  
+- **PostgreSQL** pour la base vectorielle et le stockage  
+- **Docker** pour la conteneurisation et le déploiement  
+
+## Résultat
+
+- 📩 Emails automatiquement triés et intégrés dans le CRM.  
+- 🤖 Réponses enrichies par un pipeline RAG, réduisant le temps de traitement.  
+- 🔄 Workflows modulaires, faciles à maintenir et à faire évoluer.  
+
+## Ce que j’ai appris
+
+- La valeur d’un **outil visuel comme n8n** pour rendre l’automatisation accessible.  
+- L’importance de combiner **IA + orchestration** pour créer des solutions robustes.  
+- Comment documenter et structurer des workflows pour qu’ils soient compris et maintenus par toute l’équipe.  

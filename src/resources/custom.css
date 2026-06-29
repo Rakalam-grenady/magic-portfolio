@@ -132,6 +132,12 @@
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.25));
 }
 
+.showblack{
+  background-color: rgba(0, 0, 0, 0.267);
+  border-radius: 10px;
+  padding: 20px;
+}
+
 @keyframes techMarqueeRight {
   from {
     transform: translateX(-50%);
@@ -140,4 +146,5 @@
     transform: translateX(0%);
   }
 }
+
 

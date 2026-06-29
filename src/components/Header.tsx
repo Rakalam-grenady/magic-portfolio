@@ -74,7 +74,7 @@ export const Header = () => {
         }}
       >
         <Row flex={1} paddingLeft="12" vertical="center" textVariant="body-default-s">
-          <Row style={{ width: 160, height: 72, position: "relative" }}>
+          <Row  style={{ width: 160, height: 72, position: "relative" }}>
             <Image
               src="/images/logo.png"
               alt="Logo"
@@ -195,12 +195,12 @@ export const Header = () => {
                   </Row>
                 </>
               )}
-              {display.themeSwitcher && (
+              {/* {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="24" />
                   <ThemeToggle />
                 </>
-              )}
+              )} */}
             </Row>
           </Row>
         </Row>

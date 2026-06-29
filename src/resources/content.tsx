@@ -105,8 +105,8 @@ const about: About = {
     title: "Profil",
     description: (
       <>
-        Je suis Patrick, développeur Full Stack passionné, je conçois et 
-        développe des applications modernes du front-end au back-end, tout 
+        Je suis Patrick, développeur Full Stack passionné, je conçois et
+        développe des applications modernes du front-end au back-end, tout
         en intégrant l’automatisation et l’intelligence artificielle.
         <br />
         <br />
@@ -160,8 +160,6 @@ const about: About = {
           { icon: "fastapi", label: "FastAPI", color: "#009688" },
         ],
         images: [
-          {src: "/images/gallery/horizontal-1.jpg", alt: "img 1", height: 10, width: 10},
-          {src: "/images/gallery/horizontal-2.jpg", alt: "img 1", height: 10, width: 10},
         ],
       },
 
@@ -303,15 +301,15 @@ const about: About = {
     title: "Formations",
     institutions: [
       {
-        name: "— 2026 : Master 2 en Informatique", 
+        name: "— Master 2 en Informatique",
         description: <>Ecole Nationale d'Informatique (ENI) — Tanambao</>,
       },
       {
-        name: "— 2025 : Master 1 en Informatique",
+        name: "— Master 1 en Informatique",
         description: <> Ecole Nationale d'Informatique (ENI) — Tanambao</>,
       },
       {
-        name: "— 2024 : Licence en Informatique" ,
+        name: "— Licence en Informatique",
         description: <>Ecole Nationale d'Informatique (ENI) — Tanambao </>,
       },
     ],
