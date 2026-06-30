@@ -1,0 +1,84 @@
+---
+title: "Vibe coding : ce que j'ai vraiment appris en codant à l'instinct avec l'IA"
+summary: "Retour d'expérience sur le vibe coding : ce qui fonctionne, ce qui casse en production, et où placer la limite entre vitesse et rigueur."
+publishedAt: "2026-06-20"
+tag: "IA & Développement"
+image: "/images/projects/project-01/codevibe.jpg"
+---
+
+## Contexte
+
+Le terme "vibe coding" décrit une façon de développer où l'on décrit une intention en langage naturel à un agent IA, on regarde le résultat tourner, et on itère par retouches successives plutôt que par une spécification écrite à l'avance. J'ai testé cette approche sur plusieurs petits projets ces derniers mois, du prototype jetable jusqu'à des features destinées à passer en production.
+
+## Ce qui fonctionne bien
+
+Sur des tâches bien délimitées — un composant d'UI, un script de migration, un endpoint CRUD — le vibe coding est redoutablement efficace. Décrire le comportement attendu et laisser l'agent itérer sur l'implémentation fait gagner un temps réel sur la phase de premier jet.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-2"
+    codes={[
+  {
+    code:
+`"Crée un hook React qui debounce une valeur de recherche
+et annule la requête précédente si une nouvelle est lancée"`,
+    language: "text",
+    label: "Exemple de prompt utilisé pour générer un hook"
+  }
+]} />
+
+Le résultat généré était fonctionnel à 90 % dès le premier essai. Les 10 % restants concernaient la gestion d'un cas limite (annulation lors du démontage du composant) que j'ai dû préciser explicitement.
+
+## Là où ça casse
+
+Le vibe coding devient dangereux dès que la tâche touche à de la logique métier critique ou à de la sécurité. J'ai eu un cas concret : une route d'API générée gérait correctement le cas nominal, mais ne vérifiait pas que l'utilisateur authentifié était bien propriétaire de la ressource avant de la modifier.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="3-5"
+    codes={[
+  {
+    code:
+`// Généré par l'agent — fonctionne, mais faille de sécurité
+export async function PATCH(req: Request, { params }) {
+  const body = await req.json();
+  const updated = await db.update(resources)
+    .set(body)
+    .where(eq(resources.id, params.id));
+  return Response.json(updated);
+}`,
+    language: "ts",
+    label: "Code généré sans vérification d'autorisation"
+  }
+]} />
+
+Le problème ici n'est pas la qualité du code — il est propre et lisible — mais l'absence de contrôle métier qu'un prompt rapide n'avait pas explicitement demandé. L'agent répond à ce qu'on lui demande, pas à ce qu'on a oublié de demander.
+
+## Ce que j'ai changé dans ma façon de travailler
+
+**Je garde la revue de code humaine non négociable.** Le vibe coding accélère l'écriture, jamais la responsabilité de ce qui part en production.
+
+**Je découpe les prompts par couche de risque.** Logique d'affichage et utilitaires : vibe coding direct. Auth, paiement, accès aux données sensibles : je spécifie explicitement chaque contrainte, ou j'écris ce code moi-même.
+
+**Je demande systématiquement les tests en même temps que le code.** Un prompt qui inclut "et les tests associés, y compris les cas limites" change radicalement la qualité du résultat.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-2"
+    codes={[
+  {
+    code:
+`"Ajoute la vérification que req.user.id === resource.ownerId
+avant toute modification, et écris les tests pour le cas refusé"`,
+    language: "text",
+    label: "Prompt corrigé avec contrainte explicite"
+  }
+]} />
+
+## Mon point de vue
+
+Le vibe coding n'est pas une méthode de développement à part entière, c'est un accélérateur de premier jet. Il excelle pour explorer rapidement une idée, prototyper une interface, ou écrire du code utilitaire à faible enjeu. Il échoue silencieusement dès qu'on lui délègue des décisions qu'on n'a pas formulées — et c'est précisément le piège : le code généré a l'air correct, compile, tourne, et c'est souvent en production qu'on découvre le trou.
+
+## Conclusion
+
+Le vibe coding mérite sa place dans le workflow, mais comme un outil parmi d'autres, pas comme un substitut à la rigueur. La compétence qui devient critique n'est plus seulement "savoir coder", c'est savoir formuler une intention complète — et savoir reconnaître les zones où l'instinct ne suffit plus.

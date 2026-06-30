@@ -1,0 +1,81 @@
+---
+title: "MCP : le protocole qui connecte les agents IA à vos vrais outils"
+summary: "Comprendre le Model Context Protocol, le standard ouvert qui permet à des agents comme Claude d'interagir directement avec vos applications, bases de données et services."
+publishedAt: "2026-06-25"
+tag: "IA & Architecture"
+image: "/images/projects/project-01/mcp.jpg"
+---
+
+## Contexte
+
+Pendant longtemps, connecter un agent IA à un outil métier signifiait écrire une intégration sur-mesure : un wrapper d'API, un parsing de réponse fragile, une logique de prompt engineering propre à chaque service. Le **Model Context Protocol (MCP)**, porté par Anthropic et adopté progressivement par tout l'écosystème, propose un standard ouvert pour que n'importe quel agent IA puisse découvrir et utiliser des outils externes de façon uniforme.
+
+## Le problème que MCP résout
+
+Avant MCP, chaque intégration agent-outil était un cas particulier : une intégration Slack ne ressemblait en rien à une intégration GitHub, et chaque nouvel outil nécessitait de réécrire la logique de communication. MCP standardise cette couche : un serveur MCP expose ses capacités (outils, ressources, prompts) dans un format que n'importe quel client compatible peut consommer, sans connaître les détails d'implémentation du service sous-jacent.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-8"
+    codes={[
+  {
+    code:
+`// Déclaration minimale d'un outil MCP
+{
+  name: "get_invoice",
+  description: "Récupère une facture par son identifiant",
+  inputSchema: {
+    type: "object",
+    properties: { id: { type: "string" } },
+    required: ["id"]
+  }
+}`,
+    language: "json",
+    label: "Définition d'un outil exposé via MCP"
+  }
+]} />
+
+## Architecture
+
+MCP repose sur une architecture client-serveur simple : un **hôte** (l'application qui héberge l'agent, par exemple Claude Desktop ou un IDE), un **client MCP** qui maintient la connexion, et un **serveur MCP** qui expose les capacités d'un système donné — base de données, CMS, outil de gestion de projet, système de fichiers.
+
+<CodeBlock
+    marginBottom="16"
+    highlight="1-10"
+    codes={[
+  {
+    code:
+`import { McpServer } from "@modelcontextprotocol/sdk/server";
+
+const server = new McpServer({ name: "inventory", version: "1.0.0" });
+
+server.tool(
+  "search_products",
+  { query: { type: "string" } },
+  async ({ query }) => {
+    const results = await db.products.search(query);
+    return { content: [{ type: "text", text: JSON.stringify(results) }] };
+  }
+);`,
+    language: "ts",
+    label: "Serveur MCP minimal exposant un outil de recherche"
+  }
+]} />
+
+L'agent négocie dynamiquement avec le serveur : il découvre quels outils sont disponibles, leurs paramètres attendus, et peut les invoquer dans le cadre d'une conversation — sans que le développeur de l'agent ait eu besoin de coder cette intégration spécifique à l'avance.
+
+## Pourquoi ça change la donne
+
+**Interopérabilité réelle.** Un serveur MCP écrit une fois est utilisable par n'importe quel client compatible — Claude, mais aussi d'autres agents qui adoptent le standard. On ne code plus une intégration par produit IA.
+
+**Permissions explicites.** Comme pour les manifestes de capacités qu'on retrouve dans des architectures de plugins sandboxés, un serveur MCP ne déclare que ce qu'il autorise — réduisant la surface d'action de l'agent au strict périmètre voulu.
+
+**Adoption par l'écosystème.** Au-delà des outils internes d'entreprise, des produits grand public (CMS, outils de gestion, plateformes cloud) intègrent désormais nativement un serveur MCP pour devenir pilotables par des agents.
+
+## Limites à connaître
+
+MCP reste un protocole jeune : la gestion fine des erreurs, l'authentification multi-tenant et l'observabilité des appels d'outils sont encore des sujets en évolution rapide d'une implémentation à l'autre. Exposer un serveur MCP sur des données sensibles demande la même rigueur que n'importe quelle API : validation des entrées, scoping des permissions, et audit des appels.
+
+## Conclusion
+
+MCP n'est pas qu'un détail technique de plomberie : c'est ce qui permet de passer d'un agent qui *parle bien* à un agent qui *agit réellement* sur des systèmes concrets. Pour quiconque construit des outils aujourd'hui, exposer une interface MCP devient presque aussi naturel qu'exposer une API REST il y a dix ans.
