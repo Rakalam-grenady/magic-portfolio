@@ -3,6 +3,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
+import portfolioFavicon from "./favicon.png";
 
 import {
   Background,
@@ -45,6 +46,7 @@ export default async function RootLayout({
       )}
     >
       <head>
+        <link rel="icon" type="image/png" href={portfolioFavicon.src} />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{

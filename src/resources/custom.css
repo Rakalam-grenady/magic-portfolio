@@ -66,6 +66,9 @@
 
 .gradientTitle {
   display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0;
   background-image:
     linear-gradient(60deg, var(--scheme-neutral-400), var(--scheme-accent-1200)),
     linear-gradient(
